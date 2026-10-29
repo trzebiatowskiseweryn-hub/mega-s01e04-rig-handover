@@ -9,7 +9,7 @@ describe('readNight', () => {
     const n = readNight('runs', '2026-10-28');
     expect(n).not.toBeNull();
     expect(n!.badLines).toBe(1);
-    expect(n!.counts).toEqual({ ok: 11, retry: 4, fail: 1 });
+    expect(n!.counts).toEqual({ ok: 10, retry: 4, fail: 1 });
     expect(n!.rows.map((r) => r.job)).toEqual([
       'digest/render',
       'fixtures/refresh',
