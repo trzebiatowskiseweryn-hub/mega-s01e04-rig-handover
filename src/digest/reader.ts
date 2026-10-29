@@ -29,6 +29,7 @@ export function parseLine(line: string): RunLine | null {
 
 export function digest(night: string, text: string): Night {
   const rows = new Map<string, DigestRow>();
+  const counts: Record<RunStatus, number> = { ok: 0, retry: 0, fail: 0 };
   let badLines = 0;
   for (const raw of text.split(/\r?\n/)) {
     if (raw.trim() === '') continue;
@@ -37,6 +38,7 @@ export function digest(night: string, text: string): Night {
       badLines++;
       continue;
     }
+    counts[l.status]++;
     const r = rows.get(l.job);
     if (!r) {
       rows.set(l.job, {
@@ -62,6 +64,7 @@ export function digest(night: string, text: string): Night {
     night,
     rows: [...rows.values()].sort((a, b) => (a.job < b.job ? -1 : a.job > b.job ? 1 : 0)),
     badLines,
+    counts,
   };
 }
 
